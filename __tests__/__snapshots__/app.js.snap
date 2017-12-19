@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App page matches snapshot 1`] = `
+<div
+  className="container"
+>
+  <header
+    className="header"
+  >
+    <a
+      href="#/"
+      onClick={[Function]}
+    >
+      <h1
+        className="header__title"
+      >
+        Andy Crypto
+      </h1>
+    </a>
+  </header>
+  <div
+    className="container__wrap container__wrap--home"
+  >
+    <div
+      className="content is-loading"
+    >
+      <div
+        className="panel"
+      />
+      <div
+        className="loader"
+      >
+        <div
+          className="loader__icon"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
