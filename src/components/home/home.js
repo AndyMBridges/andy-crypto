@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import Coininfo from './coinInfo.js';
+
 import "./home.scss";
+
+// const io = require('socket.io-client')  
+// const socket = io.connect('https://coincap.io');  
+
+// const socket = io.connect('https://coincap.io');
 
 class Home extends Component {
   // Create initial state and pass props
@@ -10,7 +17,7 @@ class Home extends Component {
     this.state = {
       isLoading: true,
       coins: []
-    };
+    }
   }
 
   // Custom fetch data method
@@ -22,30 +29,37 @@ class Home extends Component {
       .then(response => response.json())
       // Take parsedJSON and log results
       // Create individual object for each of the users
-      .then(parsedJSON => parsedJSON.map(item => (
+      .then(parsedJSON => parsedJSON.map(coin => (
           {
-              long: `${item.long}`,
-              short: `${item.short}`,
-              price: `${item.price}`
+              long: `${coin.long}`,
+              short: `${coin.short}`,
+              price: `${coin.price}`
           }
       )))
       // Overwrite empty array with new contacts
       // Set array to contacts state and set isLoading to false
-      .then(coins => this.setState({
-          coins,
-          isLoading: false
-      }))
+      .then(coins => {
+        this.setState({
+            coins,
+            isLoading: false
+        })
+        //console.log(tradeMsg.msg.price);
+      })
       // Catch the errors
       .catch(error => console.log('parsing failed', error))
   }
 
 
   componentDidMount() {
-    this.fetchData();
+    setInterval(() => {
+      this.fetchData();
+      console.log('refreshed'); 
+    }, 10000);
   }
 
   render() {
     const { isLoading, coins } = this.state;
+    //console.log(flashClass);
     return (
       <div className="container__wrap container__wrap--home">
         <div className={`content ${isLoading ? "is-loading" : ""}`}>
@@ -54,18 +68,11 @@ class Home extends Component {
             // Return each set form array using map function
             // Otherwise return null
             !isLoading && coins.length > 0
-              ? coins.map(set => {
+              ? coins.map(coin => {
                   // Destruct each of the items in let variable
-                  let { long, short, price } = set;
+                  let { long, short, price } = coin;
                   return (
-                    <div className="panel__item" key={short}>
-                      <p>Name: {long}</p>
-                      <p>Short: {short}</p>
-                      <p>Price: ${price}</p>
-                      <Link className="button" to={`/${short}`}>
-                        View Coin
-                      </Link>
-                    </div>
+                    <Coininfo key={short} price={price} short={short} long={long} />
                   );
                 })
               : null}

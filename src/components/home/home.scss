@@ -83,11 +83,18 @@ h2 {
   float: left;
   width: 100%;
   .panel__item {
+    transition: all 0.2s linear;
     background: #fff;
     float: left;
     width: 100%;
     padding: 20px;
     margin-bottom: 20px;
+    &.red {
+      background-color:rgb(230, 116, 116);
+    }
+    &.green {
+      background-color: rgb(126, 214, 126);
+    }
     h2 {
       float: left;
       width: 100%;
